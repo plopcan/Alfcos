@@ -1,0 +1,13 @@
+Este proyecto esta compuesto por dos carptea principales. 
+
+'Alfcos' contiene el frontend, un proyecto de angular. Los elementos(interfaces, servicios, componentes)
+se encuentran en la carpeta src.
+
+'Alfcos_backend' contiene el backend, un proyecto de django. Dentro de esta carpeta se pueden encontrar:
+        - 'Alfcos' donde se localizan los modelos y otros elementos de la aplicacion
+        - 'Alfcos_backend' donde se localiza la configuracion general de django
+        - 'media' donde se guardan las imagenes que utiliza la aplicacion
+
+La carpeta venv contiene el entorno virtual con la librerias y extendiones descargadas para el correcto funcionamiento del proyecto.
+
+start.bat es el archivo que ejecuta toda la aplicacion.

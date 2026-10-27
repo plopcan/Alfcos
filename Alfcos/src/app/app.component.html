@@ -1,0 +1,22 @@
+<body class="container-fluid">
+  <header>
+    <h1>AlfCos</h1>
+    @if(isloged()){
+      <nav>
+          <button  (click)="navigateTo('/socios')">Socios</button>
+          <button  (click)="getUser()">Usuarios</button>
+          <button  (click)="navigateTo('/talleres')">Talleres</button>
+          <button  (click)="navigateTo('/eventos')">Eventos</button>
+          <button  (click)="navigateTo('/cuentas')">Cuentas</button>
+      </nav>
+    }
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <h3>AlfCos</h3>
+    <p></p>
+    <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+  </footer>
+</body>

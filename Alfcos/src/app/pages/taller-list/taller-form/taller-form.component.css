@@ -1,0 +1,56 @@
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-bg-color);
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+}
+
+.formContainer form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formContainer form .form-label {
+    margin-bottom: 0.5em;
+}
+
+.formContainer form .form-control,
+.formContainer form .form-check-input {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formContainer form .btn {
+    padding: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.formContainer form .btn-primary {
+    background-color: var(--mainButton-bg-color);
+    color: white;
+}
+.btn-inscribir {
+    padding: 2em 2.25em; /* Reduce el padding para disminuir la altura */
+    font-size: 0.9em; /* Opcional: ajusta el tamaño de la fuente si es necesario */
+}
+#dias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em; /* Optional: Add spacing between items */
+}
+#dias .col-6 {
+    width: 50%; /* Ensure two columns */
+}
+*{
+    font-size: 1em;
+}

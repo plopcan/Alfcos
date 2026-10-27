@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.card-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.card {
+    width: 85mm;
+    height: 54mm;
+    min-width: 85mm;
+    max-width: 85mm;
+    min-height: 54mm;
+    max-height: 54mm;
+    border: 2px solid #444;
+    margin: 4mm;
+    padding: 0;
+    float: left;
+    display: block;
+    box-sizing: border-box;
+    box-shadow: none;
+    page-break-inside: avoid;
+    position:relative;
+    overflow: visible !important;
+}
+.logo {
+    width: 18mm;
+    height: 18mm;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 20mm;
+    right: 2mm;
+    display: block;
+    z-index: 10;
+}
+.socioImg{
+    width: 24mm;
+    height: 24mm;
+    display: inline-block;
+}
+.encabezado {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+}
+.numero-socio {
+    font-size: 13pt;
+    font-weight: bold;
+    margin-left: 6mm;
+    margin-right: 2mm;
+    display: inline-block;
+    vertical-align: middle;
+}
+.info {
+    display: block;
+    height: 34mm;
+    overflow: hidden;
+    position: relative;
+}
+.datos {
+    display: block;
+    margin-left: 2mm;
+    font-size: 12pt;
+}
+.asociacion {
+    height: auto;
+    display: block;
+    font-size: 12pt;
+    margin-left: 8mm;
+}
+.asoText {
+    font-size: 12pt;
+    margin: 0;
+}
+.card-list:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+@page {
+    margin: 0;
+    size: A4;
+}

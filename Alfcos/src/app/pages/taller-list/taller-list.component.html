@@ -1,0 +1,71 @@
+@if (tallerList$ | async; as response) {
+
+    <button class="btn btn-success" (click)="addTaller()">Añadir Taller</button>
+    <br><br>
+    <!-- Filter Form -->
+    <form class="mb-3" (ngSubmit)="onFilterSubmit()" autocomplete="off">
+        <div class="row g-2 align-items-end">
+            <div class="col">
+                <label for="filtroNombre" class="form-label">Nombre</label>
+                <input id="filtroNombre" type="text" class="form-control" [(ngModel)]="filterNombre" name="filterNombre">
+            </div>
+            <div class="col">
+                <label for="filtroMonitor" class="form-label">Monitor</label>
+                <input id="filtroMonitor" type="text" class="form-control" [(ngModel)]="filterMonitor" name="filterMonitor">
+            </div>
+            <div class="col">
+                <label for="filtroDia" class="form-label">Día</label>
+                <select id="filtroDia" class="form-select" [(ngModel)]="filterDia" name="filterDia">
+                    <option value="">Todos</option>
+                    @for (dia of diasDisponibles; track dia) {
+                    <option value="{{dia}}">{{dia}}</option>
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <label for="filtroPlazas" class="form-label">Plazas</label>
+                <input id="filtroPlazas" type="number" class="form-control" [(ngModel)]="filterPlazas" name="filterPlazas">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="button" class="btn btn-secondary ms-1" (click)="clearFilters()">Limpiar</button>
+            </div>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+               <th>nombre</th> 
+               <th>hora</th> 
+               <th>dias</th> 
+               <th>plazas libres</th> 
+               <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(item of response.results; track item.n_taller) {
+        <tr> 
+            <td>{{item.nombre}}</td>
+            <td>{{item.hora_inicio}} - {{item.hora_fin}}</td>
+            <td>{{item.dia}}</td>
+            <td>{{item.plazas_libres}}</td>
+            <td>
+                <button class="btn btn-info btn-sm" (click)="getTaller(item.n_taller)">Seleccionar</button><br>
+                <button class="btn btn-dark btn-sm mt-1" (click)="deleteTaller(item.n_taller)">Eliminar</button>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <div class="pagination-controls">
+        <button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 1">←</button>
+        <input type="number" value="{{currentPage}}" class="page-input" readonly>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="!hasNextPage">→</button>
+    </div><br>
+}
+@if(errorMessage) {
+    <app-error-message [errorMessage]="errorMessage"/>
+}

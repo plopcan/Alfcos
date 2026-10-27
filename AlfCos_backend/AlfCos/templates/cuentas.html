@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cuentas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .gasto {
+            background-color: #ffdddd;
+        }
+        .ingreso {
+            background-color: #ddffdd;
+        }
+        .anulada {
+            background-color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Cuentas</h1>
+    <p>Total: {{total}}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Anulada</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cuenta in cuentas %}
+            <tr
+              {% if cuenta.anulada %}
+                class="anulada"
+              {% elif cuenta.tipo.tipo == 'Gasto' %}
+                class="gasto"
+              {% elif cuenta.tipo.tipo == 'CuentaEvento' and cuenta.cuentaevento_set.first and cuenta.cuentaevento_set.first.subtipo == 'gasto' %}
+                class="gasto"
+              {% else %}
+                class="ingreso"
+              {% endif %}
+            >
+                <td>{{ cuenta.descripcion }}</td>
+                <td>{{ cuenta.cantidad }}</td>
+                <td>{{ cuenta.fecha }}</td>
+                <td>{{ cuenta.tipo.tipo }}
+                    {% if cuenta.tipo.tipo == 'CuentaEvento' and cuenta.cuentaevento_set.exists %}
+                        ({{ cuenta.cuentaevento_set.first.subtipo }})
+                    {% endif %}
+                </td>
+                <td>{{ cuenta.anulada|yesno:"Sí,No" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

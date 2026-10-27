@@ -1,0 +1,64 @@
+<div class="formContainer">
+  <form [formGroup]="cuentasForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label for="descripcion" class="form-label">Descripción:</label>
+        <input id="descripcion" formControlName="descripcion" type="text" class="form-control" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="cantidad" class="form-label">Cantidad:</label>
+        <input id="cantidad" formControlName="cantidad" type="number" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label for="tipo" class="form-label">Tipo:</label>
+        <select id="tipo_id" formControlName="tipo_id" class="form-select">
+          <option value="">Seleccione un tipo</option>
+          <option value="2">Cuota</option>
+          <option value="4">Gasto</option>
+          <option value="3">Ingreso</option>
+          <option value="1">CuentaEvento</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3" *ngIf="cuentasForm.get('tipo_id')?.value === '2'">
+      <div class="col-md-12">
+        <label for="n_socio" class="form-label">Número de Socio:</label>
+        <input id="n_socio" formControlName="n_socio" type="text" class="form-control" />
+      </div>
+      <div class="col-md-12">
+        <label for="periodo" class="form-label">Periodo:</label>
+        <select id="periodo" formControlName="periodo" class="form-select">
+          <option value="">Seleccione un periodo</option>
+          <option value="1semestre">1er semestre</option>
+          <option value="2semestre">2do semestre</option>
+          <option value="anio">Año completo</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3" *ngIf="cuentasForm.get('tipo_id')?.value === '1'">
+      <div class="col-md-12">
+        <label for="id_evento" class="form-label">ID del Evento:</label>
+        <input id="id_evento" formControlName="id_evento" type="text" class="form-control" />
+      </div>
+      <div class="col-md-12">
+        <label for="subtipo" class="form-label">Subtipo:</label>
+        <select id="subtipo" formControlName="subtipo" class="form-select">
+          <option value="">Seleccione un subtipo</option>
+          <option value="gasto">Gasto</option>
+          <option value="ingreso">Ingreso</option>
+        </select>
+      </div>
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" [disabled]="cuentasForm.invalid" class="btn btn-primary">Crear Cuenta</button>
+      <button type="button" (click)="imprimir()" class="btn btn-secondary">Imprimir Ticket</button>
+    </div>
+    
+    <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+        {{ errorMessage }}
+    </div>
+  </form>
+</div>
+

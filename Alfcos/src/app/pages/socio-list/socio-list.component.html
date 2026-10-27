@@ -1,0 +1,109 @@
+<button class="btn btn-success" (click)="addSocio()">Añadir Socio</button>
+    <br><br>
+  <button class="btn btn-primary" (click)="descargar('apellido')">Descargar segun Apellido</button>
+  
+  <button class="btn btn-primary" (click)="descargar('n_socio')">Descargar segun N socio</button>
+  <br><br>
+  <button class="btn btn-primary" (click)="descargarTarjetas()">Crear Carnets</button>
+  <br><br>
+  <div class="row mb-2">
+  <div class="col-auto">
+    <label for="ordenar" class="form-label">Ordenar por:</label>
+    <select id="ordenar" class="form-select" [(ngModel)]="ordering" name="ordering" (change)="loadPage(currentPage)">
+      <option value="-n_socio">Nuevos primero</option>
+      <option value="n_socio">Antiguos primero</option>
+      <option value="apellido">Apellido A-Z</option>
+      <option value="-apellido">Apellido Z-A</option>
+    </select>
+  </div>
+</div> <br>
+<form class="mb-3" (ngSubmit)="onFilterSubmit()" autocomplete="off">
+    <div class="row g-2 align-items-end">
+        <div class="col">
+            <label for="filtroNombre" class="form-label">Nombre</label>
+            <input id="filtroNombre" type="text" class="form-control" [(ngModel)]="filterNombre" name="filterNombre">
+        </div>
+        <div class="col">
+            <label for="filtroApellido" class="form-label">Apellidos</label>
+            <input id="filtroApellido" type="text" class="form-control" [(ngModel)]="filterApellido" name="filterApellido">
+        </div>
+        <div class="col">
+            <label for="filtroDni" class="form-label">DNI</label>
+            <input id="filtroDni" type="text" class="form-control" [(ngModel)]="filterDni" name="filterDni">
+        </div>
+        <div class="col">
+            <label for="filtroPagado" class="form-label">Pagado</label>
+            <select id="filtroPagado" class="form-select" [(ngModel)]="filterPagado" name="filterPagado">
+                <option value="">Todos</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="col">
+            <label for="filtroNSocio" class="form-label">Nº Socio</label>
+            <input id="filtroNSocio" type="text" class="form-control" [(ngModel)]="filterNSocio" name="filterNSocio">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <button type="button" class="btn btn-secondary ms-1" (click)="clearFilters()">Limpiar</button>
+        </div>
+    </div>
+</form>
+
+@if (socioList$ | async; as response) {
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nº Socio</th>
+               <th>dni</th> 
+               <th>Nombre Apellidos</th> 
+               <th>Periodo Pagado</th> 
+               <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(item of response.results; track item.dni) {
+        <tr>  
+    <td>
+        <input type="checkbox"
+            [checked]="listado_socios.includes(item.n_socio)"
+            (change)="onCheckboxChange(item.n_socio, $event)">
+    </td>
+            <td>{{item.n_socio}}</td>
+            <td>{{item.dni}}</td>
+            <td>{{item.nombre}} {{item.apellido}}</td>
+            <td>{{item.periodo_pagado}}</td>
+            <td>
+                <button class="btn btn-info btn-sm" (click)="getSocio(item.n_socio)">Seleccionar</button>
+                <button class="btn btn-primary btn-sm" (click)="createCuota(item.n_socio)">Pagar Cuota</button>
+                <button class="btn btn-dark btn-sm mt-1" (click)="deleteSocio(item.n_socio)">Eliminar</button>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <div class="pagination-controls">
+        <button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 1">←</button>
+        <!-- Primeras 3 páginas -->
+        <ng-container *ngFor="let page of [1,2,3]">
+            <button *ngIf="page <= totalPages" class="btn btn-outline-primary" [class.active]="currentPage === page" (click)="loadPage(page)">{{ page }}</button>
+        </ng-container>
+        <!-- Puntos suspensivos si la página actual está lejos de las primeras/últimas -->
+        <span *ngIf="currentPage > 4 && totalPages > 7">...</span>
+        <!-- Página actual centrada si no está entre las primeras/últimas -->
+        <button *ngIf="currentPage > 3 && currentPage < totalPages - 2" class="btn btn-primary active" disabled>{{ currentPage }}</button>
+        <span *ngIf="currentPage < totalPages - 3 && totalPages > 7">...</span>
+        <!-- Últimas 3 páginas -->
+        <ng-container *ngFor="let page of [totalPages-2, totalPages-1, totalPages]">
+            <button *ngIf="page > 3 && page <= totalPages" class="btn btn-outline-primary" [class.active]="currentPage === page" (click)="loadPage(page)">{{ page }}</button>
+        </ng-container>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="!hasNextPage">→</button>
+    </div><br>
+
+}
+@if(errorMessage) {
+    <app-error-message [errorMessage]="errorMessage"/>
+}

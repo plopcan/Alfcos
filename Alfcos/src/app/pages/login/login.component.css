@@ -1,0 +1,65 @@
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Altura completa de la ventana */
+    background-color: var(--main-bg-color);
+}
+
+.formContainer form {
+    background-color: var(--form-bg-color);
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Ancho máximo para el formulario */
+    display: flex;
+    flex-direction: column;
+}
+
+.formContainer form h3 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.formContainer form label {
+    margin-bottom: 0.5em;
+}
+
+.formContainer form input {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formContainer form button {
+    padding: 0.5em;
+    background-color: var(--mainButton-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 200px; /* Ancho máximo para el botón */
+    align-self: center; /* Centra el botón horizontalmente */
+}
+
+.formContainer form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Media query para ajustar el tamaño del botón en pantallas más pequeñas */
+@media (max-width: 600px) {
+    .formContainer form {
+        padding: 1em;
+    }
+
+    .formContainer form button {
+        max-width: 100%; /* Ancho máximo del botón en pantallas pequeñas */
+    }
+}
+*{
+    font-size: 1em;
+}

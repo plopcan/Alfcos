@@ -1,0 +1,84 @@
+@if (eventoList$ | async; as response) {
+    
+    <button class="btn btn-success" (click)="addEvento()">Añadir Evento</button>
+    <br><br>
+    <!-- Filter Form -->
+    <form class="mb-3" (ngSubmit)="onFilterSubmit()" autocomplete="off">
+        <div class="row g-2 align-items-end">
+            <div class="col">
+                <label for="filtroNombre" class="form-label">Nombre</label>
+                <input id="filtroNombre" type="text" class="form-control" [(ngModel)]="filterNombre" name="filterNombre">
+            </div>
+            <div class="col">
+                <label for="filtroTipo" class="form-label">Tipo</label>
+                <select id="filtroTipo" class="form-select" [(ngModel)]="filterTipo" name="filterTipo">
+                    <option value="">Todos</option>
+                    <option value="3">Viaje</option>
+                    <option value="2">Comida</option>
+                    <option value="1">Otro</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="filtroFecha" class="form-label">Fecha Inicio</label>
+                <input id="filtroFecha" type="date" class="form-control" [(ngModel)]="filterFecha" name="filterFecha">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="button" class="btn btn-secondary ms-1" (click)="clearFilters()">Limpiar</button>
+            </div>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+               <th>ID</th> 
+               <th>nombre</th> 
+               <th>precio</th> 
+               <th>fecha</th> 
+               <th>plazas libres</th> 
+               <th>tipo</th> 
+               <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(item of response.results; track item.id_evento) {
+        <tr> 
+            <td>{{item.id_evento}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.precio}}</td>
+            <td>{{item.fecha_ini}} - {{item.fecha_fin}}</td>
+            <td>{{item.plazasLibres}}</td>
+            <td>{{item.tipo}}</td>
+            <td>
+                <button class="btn btn-info btn-sm" (click)="getEvento(item.id_evento)">Seleccionar</button><br>
+                <button class="btn btn-dark btn-sm mt-1" (click)="deleteEvento(item.id_evento)">Eliminar</button>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <div class="pagination-controls">
+        <button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 1">←</button>
+        <!-- Primeras 3 páginas -->
+        <ng-container *ngFor="let page of [1,2,3]">
+            <button *ngIf="page <= totalPages" class="btn btn-outline-primary" [class.active]="currentPage === page" (click)="loadPage(page)">{{ page }}</button>
+        </ng-container>
+        <!-- Puntos suspensivos si la página actual está lejos de las primeras/últimas -->
+        <span *ngIf="currentPage > 4 && totalPages > 7">...</span>
+        <!-- Página actual centrada si no está entre las primeras/últimas -->
+        <button *ngIf="currentPage > 3 && currentPage < totalPages - 2" class="btn btn-primary active" disabled>{{ currentPage }}</button>
+        <span *ngIf="currentPage < totalPages - 3 && totalPages > 7">...</span>
+        <!-- Últimas 3 páginas -->
+        <ng-container *ngFor="let page of [totalPages-2, totalPages-1, totalPages]">
+            <button *ngIf="page > 3 && page <= totalPages" class="btn btn-outline-primary" [class.active]="currentPage === page" (click)="loadPage(page)">{{ page }}</button>
+        </ng-container>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="!hasNextPage">→</button>
+    </div><br>
+
+}
+@if(errorMessage) {
+    <app-error-message [errorMessage]="errorMessage"/>
+}

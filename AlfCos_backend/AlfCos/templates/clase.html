@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cuentas</title>
+    <style>
+        body{
+            width: 100%;
+        }
+     table {
+    width: 150%;
+    border-collapse: collapse;
+    font-size: 150%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: left;
+    overflow-wrap: break-word;  /* Permite romper palabras largas */
+    word-break: break-word;
+    white-space: normal;         /* Permite salto de línea */
+    line-height: 0.50;            /* Reduce altura de línea */
+    margin: 2px;
+}
+
+/* Tamaños fijos para columnas específicas */
+th:nth-child(1), td:nth-child(1) {  /* Numero */
+    width: 5%;  /* Más pequeña */
+}
+
+th:nth-child(2), td:nth-child(2) {  /* Apellidos */
+    width: 30%;  /* Más grande */
+}
+
+th:nth-child(3), td:nth-child(3) {  /* Nombre */
+    width: 20%;
+}
+
+th:nth-child(4), td:nth-child(4) {  /* Telefono */
+    width: 20%;
+}
+
+th:nth-child(5), td:nth-child(5) {  /* Dni */
+    width: 15%;
+}
+    </style>
+</head>
+<body>
+    <h1>Listado alumnos Taller {{taller.nombre}}</h1>
+    <p>Monitor: {{taller.monitor}}</p>
+    <p>Horario: De {{taller.hora_inicio}} a {{taller.hora_fin}}</p>
+    <p> Dias: {% for dia in dias %}
+                    {{ dia }}, 
+            {% endfor %}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Dni</th>
+                <th>Pagado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td> {{ data.n_socio }} </td>
+                <td> {{ data.nombre }} {{ data.apellido }} </td>
+                {%if data.telefono%}
+                <td> {{ data.telefono }} </td>
+                {%else%}
+                <td>No proporcionado</td>
+                {%endif%}
+                <td> {{ data.dni }} </td>
+                    {%if data.periodos == 'No pagado'%}
+                <td> {{ data.periodos }} </td>
+                {%else%}
+                <td>  {% for periodo in data.periodos %}
+                    {{ periodo }}, 
+            {% endfor %}
+                </td>
+                {%endif%}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

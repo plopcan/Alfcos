@@ -1,0 +1,98 @@
+<div class="formContainer">
+    <form [formGroup]='sF' (ngSubmit)="sendData()" class="needs-validation" novalidate>
+        <div class="row mb-3 align-items-center">
+            @if(this.socio) {
+                <div class="col-md-3 text-center">
+                    <img src="http://localhost:8000{{this.socio.foto}}" alt="Socio" class="img-thumbnail">
+                </div>
+                <div class="col-md-9">
+                    <p><strong>Numero de Socio:</strong>   {{socio.n_socio}}</p>
+                    </div>
+            }
+            <div class="@if(this.socio) col-md-9 @else col-md-12 @endif">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre del socio:</label>
+                        <input type="text" id="nombre" formControlName="nombre" class="form-control {{sF.get('nombre')?.invalid && sF.get('nombre')?.touched ? 'is-invalid' : ''}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="dni" class="form-label">DNI del socio:</label>
+                        <input type="text" id="dni" formControlName="dni" class="form-control {{sF.get('dni')?.invalid && sF.get('dni')?.touched ? 'is-invalid' : ''}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="apellido" class="form-label">Apellidos del socio:</label>
+                <input type="text" id="apellido" formControlName="apellido" class="form-control {{sF.get('apellido')?.invalid && sF.get('apellido')?.touched ? 'is-invalid' : ''}}">
+            </div>
+            <div class="col-md-6">
+                <label for="sexo" class="form-label">Sexo:</label>
+                <select id="sexo" formControlName="sexo_id" class="form-select">
+                    <option value='1'>Hombre</option>
+                    <option value="2">Mujer</option>
+                    <option value="3">Otro</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="direccion" class="form-label">Direccion del socio:</label>
+                <input type="text" id="direccion" formControlName="direccion" class="form-control {{sF.get('direccion')?.invalid && sF.get('direccion')?.touched ? 'is-invalid' : ''}}">
+            </div>
+            <div class="col-md-4">
+                <label for="c_postal" class="form-label">Codigo Postal del socio:</label>
+                <input type="text" id="c_postal" formControlName="c_postal" class="form-control {{sF.get('c_postal')?.invalid && sF.get('c_postal')?.touched ? 'is-invalid' : ''}}">
+            </div>
+            <div class="col-md-4">
+                <label for="telefono" class="form-label">Telefono del socio:</label>
+                <input type="text" id="telefono" formControlName="telefono" class="form-control {{sF.get('telefono')?.invalid && sF.get('telefono')?.touched ? 'is-invalid' : ''}}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento del socio:</label>
+                <input type="date" id="fecha_nacimiento" formControlName="fecha_nacimiento" class="form-control {{sF.get('fecha_nacimiento')?.invalid && sF.get('fecha_nacimiento')?.touched ? 'is-invalid' : ''}}">
+            </div>
+            <div class="col-md-6">
+                <label for="foto" class="form-label">Foto del socio:</label>
+                <input type="file" id="foto" name="foto" class="form-control" (change)="onFileSelected($event)">
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            @if(this.socio) {
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            } @else {
+                <button type="submit" class="btn btn-primary">Añadir</button>
+            }
+        </div>
+        @if (this.socio){
+            <table>
+                <thead>
+                    <tr>
+                        <th>Periodo</th>
+                        <th>Pagado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 Semestre</td>
+                        <td>{{ socio.periodos_pagados && socio.periodos_pagados.includes('1semestre') ? 'Sí' : 'No' }}</td>
+                    </tr>
+                    <tr>
+                        <td>2 Semestre</td>
+                        <td>{{ socio.periodos_pagados && socio.periodos_pagados.includes('2semestre') ? 'Sí' : 'No' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Año</td>
+                        <td>{{ socio.periodos_pagados && socio.periodos_pagados.includes('anio') ? 'Sí' : 'No' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+        {{ errorMessage }}
+    </div>
+    </form>
+</div>

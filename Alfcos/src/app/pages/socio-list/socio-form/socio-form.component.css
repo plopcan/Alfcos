@@ -1,0 +1,52 @@
+.formContainer {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 80px); /* Ajustar para el navbar */
+    padding: 2rem 1rem;
+    background-color: var(--main-bg-color);
+}
+
+.formContainer form {
+    background-color: var(--form-bg-color);
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px; /* Aumentar ancho máximo para acomodar la imagen */
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start; /* Alinear al inicio en lugar del centro */
+    margin-top: 1rem;
+}
+
+.formContainer form .form-label {
+    margin-bottom: 0.5em;
+}
+
+.formContainer form .form-control,
+.formContainer form .form-select {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formContainer form .btn {
+    padding: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.formContainer form .btn-primary {
+    background-color: var(--mainButton-bg-color);
+    color: white;
+}
+
+.formContainer form .btn-success {
+    background-color: var(--successButton-bg-color);
+    color: white;
+}
+*{
+    font-size: 1em;
+}

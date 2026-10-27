@@ -1,0 +1,33 @@
+@if(this.isloged()){
+    @if(userList$ | async; as list){
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre Usuario</th>
+                    <th>Rol</th>
+                    <th>Numero Socio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(item of list; track item.n_socio){
+                <tr> 
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.rol}}</td>
+                    <td>{{item.n_socio}}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm mt-1" (click)="getUser(item.n_socio)">Seleccionar</button>
+                        @if(item.rol != "admin"){
+                            <button class="btn btn-dark btn-sm" (click)="delete(item.n_socio)">Eliminar</button><br>
+                        }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <button class="btn btn-success" (click)="addUser()">Añadir Usuario</button>
+    }
+    @if(errorMessage) {
+        <app-error-message [errorMessage]="errorMessage"/>
+    }
+}

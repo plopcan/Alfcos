@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Mesas Evento</title>
+    <style>
+        body{
+            width: 100%;
+        }
+     table {
+    width: 150%;
+    border-collapse: collapse;
+    font-size: 150%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: left;
+    overflow-wrap: break-word;  /* Permite romper palabras largas */
+    word-break: break-word;
+    white-space: normal;         /* Permite salto de línea */
+    line-height: 0.50;            /* Reduce altura de línea */
+    margin: 2px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Listado asientos {{nombre}}</h1>
+    {%for datas in datos_grupos%}
+    <h2>Mesa {{forloop.counter}}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>N Socio</th>
+                <th>Nombre</th>
+                <th>Bus</th>
+                <th>Asiento</th>
+                <th>Telefono</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td>{{ data.n_socio }}</td>
+                <td>{{ data.nombre }}</td>
+                <td>{{ data.grupo }}</td>
+                <td>{{ data.asiento }}</td>
+                <td>{{ data.tlf}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {%endfor%}
+</body>
+</html>

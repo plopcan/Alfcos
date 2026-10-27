@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'card.css' %}">
+</head>
+<body>
+    <div class="card-list">
+    {% for socio in socios %}
+        <div class="card">
+            <div class="encabezado">
+                {% if socio.foto %}
+                    <img src="{{ socio.foto.url }}" class="socioImg" />
+                {% else %}
+                    <img src="{% static 'img/default.jpg' %}" class="socioImg" />
+                {% endif %}
+                <div class="asociacion">
+                    <h1 class="asoText">Asociacion de Jubilados y pensionistas</h1>
+                    <p class="asoText">ALFONSO DE COSSÍO</p>
+                </div>
+            </div>
+            <div class="info" style="position: relative;">
+                <div class="datos">
+                    <p>Numero de Socio: {{ socio.n_socio }}</p>
+                    <span>Nombre: {{ socio.nombre }} {{ socio.apellido }}</span>
+                    <p>DNI: {{ socio.dni }}</p>
+                </div>
+                <img src="/media/logo.png" class="logo" style="position: absolute; bottom: 2mm; right: 2mm;" />
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:2 %}
+            <div style="clear: both;"></div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</body>
+</html>

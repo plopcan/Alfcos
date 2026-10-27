@@ -1,0 +1,22 @@
+.card-body {
+    font-size: 1.25rem;
+}
+.card-body h1 {
+    font-size: 1.5rem;
+}
+.card-body p {
+    font-size: 1.25rem;
+}
+    @page {
+        margin: 0mm; /* Puedes ajustarlo a 0mm si lo deseas */
+    }
+
+    .card {
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .card-body {
+        padding: 0.5rem !important;
+    }

@@ -1,0 +1,129 @@
+@if (cuentasList$ | async; as response) {
+
+    <button class="btn btn-success" (click)="addCuenta()">Añadir Cuenta</button>
+  <br><br>
+  <button class="btn btn-primary" (click)="descargar()">Descargar</button>
+  <br><br>
+  
+  <form class="mb-3" (ngSubmit)="onFilterSubmit()" autocomplete="off">
+    <div class="row g-2 align-items-end">
+      <div class="col">
+        <label for="filtroTipo" class="form-label">Tipo</label>
+        <select id="filtroTipo" class="form-select" [(ngModel)]="filterTipo" name="filtroTipo">
+          <option value="">Todos</option>
+          <option value="1">Evento</option>
+          <option value="2">Cuota</option>
+          <option value="3">Ingreso</option>
+          <option value="4">Gasto</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="filtroAnulada" class="form-label">Anulada</label>
+        <select id="filtroAnulada" class="form-select" [(ngModel)]="filterAnulada" name="filterAnulada">
+          <option value="">Todas</option>
+          <option value="true">Sí</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="col">
+        <label class="form-label">Fecha inicio</label>
+        <div class="row gx-1">
+          <div class="col">
+            <input type="number" min="1" max="31" class="form-control" placeholder="Día" [(ngModel)]="filterFechaInicioDia" name="filterFechaInicioDia">
+          </div>
+          <div class="col">
+            <select class="form-control" [(ngModel)]="filterFechaInicioMes" name="filterFechaInicioMes">
+              <option value="">Mes</option>
+              @for(mes of meses; track mes) {
+              <option value = "{{mes}}">{{ mes }}</option>
+              }
+            </select>
+          </div>
+          <div class="col">
+            <input type="number" min="1" class="form-control" placeholder="Año" [(ngModel)]="filterFechaInicioAnio" name="filterFechaInicioAnio">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <label class="form-label">Fecha fin</label>
+        <div class="row gx-1">
+          <div class="col">
+            <input type="number" min="1" max="31" class="form-control" placeholder="Día" [(ngModel)]="filterFechaFinDia" name="filterFechaFinDia">
+          </div>
+          <div class="col">
+            <select class="form-control" [(ngModel)]="filterFechaFinMes" name="filterFechaFinMes">
+              <option value="">Mes</option>
+              @for(mes of meses; track mes) {
+              <option value = "{{mes}}">{{ mes }}</option>
+              }
+            </select>
+          </div>
+          <div class="col">
+            <input type="number" min="1" class="form-control" placeholder="Año" [(ngModel)]="filterFechaFinAnio" name="filterFechaFinAnio">
+          </div>
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <button type="button" class="btn btn-secondary ms-1" (click)="clearFilters()">Limpiar</button>
+      </div>
+    </div>
+  </form>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th> 
+        <th>Descripción</th> 
+        <th>Cantidad</th> 
+        <th>Fecha</th> 
+        <th>Tipo</th> 
+        <th>Anulada</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of response.results; track item.id_cuenta) {
+        <tr>
+          <td>{{ item.id_cuenta }}</td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.fecha }}</td>
+          <td>{{ item.tipo }}</td>
+          <td>{{ item.anulada ? 'Sí' : 'No' }}</td>
+          <td>
+            <button class="btn btn-info btn-sm" (click)="getCuenta(item.id_cuenta, item.tipo)">
+              Seleccionar
+            </button>
+            <br>
+            <button class="btn btn-dark btn-sm mt-1" (click)="anularCuenta(item.id_cuenta)">
+              Anular
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  
+    <!-- Pagination controls -->
+    <div class="pagination-controls">
+        <button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 1">←</button>
+        <!-- Primeras 3 páginas -->
+        <ng-container *ngFor="let page of [1,2,3]">
+            <button *ngIf="page <= totalPages" class="btn btn-outline-primary" [class.active]="currentPage === page" (click)="loadPage(page)">{{ page }}</button>
+        </ng-container>
+        <!-- Puntos suspensivos si la página actual está lejos de las primeras/últimas -->
+        <span *ngIf="currentPage > 4 && totalPages > 7">...</span>
+        <!-- Página actual centrada si no está entre las primeras/últimas -->
+        <button *ngIf="currentPage > 3 && currentPage < totalPages - 2" class="btn btn-primary active" disabled>{{ currentPage }}</button>
+        <span *ngIf="currentPage < totalPages - 3 && totalPages > 7">...</span>
+        <!-- Últimas 3 páginas -->
+        <ng-container *ngFor="let page of [totalPages-2, totalPages-1, totalPages]">
+            <button *ngIf="page > 3 && page <= totalPages" class="btn btn-outline-primary" [class.active]="currentPage === page" (click)="loadPage(page)">{{ page }}</button>
+        </ng-container>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="!hasNextPage">→</button>
+    </div><br>
+}
+@if(errorMessage) {
+    <app-error-message [errorMessage]="errorMessage"/>
+}

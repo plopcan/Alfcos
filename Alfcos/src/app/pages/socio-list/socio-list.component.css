@@ -1,0 +1,34 @@
+*{
+    font-size: 1em;
+}
+td button{
+    margin: 0.5em !important;
+}
+
+th, td{
+    margin: 1px;
+    padding: 1px;
+}
+th:nth-child(1), td:nth-child(1) {  /* Numero */
+    width: 5%;  /* Más pequeña */
+}
+
+th:nth-child(2), td:nth-child(2) {  /* dni */
+    width: 5%;  /* Más grande */
+}
+
+th:nth-child(3), td:nth-child(3) {  /* Nombre */
+    width: 10%;
+}
+
+th:nth-child(4), td:nth-child(4) {  /* pagado */
+    width: 25%;
+}
+
+th:nth-child(5), td:nth-child(5) {  /* acciones */
+    width: 25%;
+}
+
+th:nth-child(6), td:nth-child(6) {  /* acciones */
+    width: 30%;
+}

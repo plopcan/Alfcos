@@ -1,0 +1,24 @@
+<div class="formContainer">
+    @if(this.isloged()){
+    <form [formGroup]="uF" (ngSubmit)="sendData()" class="needs-validation" novalidate>
+        <label for="n_socio" class="form-label">Identificador del usuario:</label>
+        <input type="text" formControlName="n_socio" id="n_socio" class="form-control" [readonly]="full === false"/><br/>
+        <label for="nombre" class="form-label">Nombre clave del usuario:</label>
+        <input type="text" formControlName="nombre" id="nombre" class="form-control"/><br/>
+        <label for="rol" class="form-label">Rol del usuario:</label>
+        <input type="text" formControlName="rol" id="rol" class="form-control" [readonly]="full === false"/><br/>
+        <label for="password" class="form-label">Nueva contraseña:</label>
+        <input type="password" formControlName="password" id="new" class="form-control"/><br/>
+        <label for="Npassword" class="form-label">Confirmar nueva contraseña:</label>
+        <input type="password" formControlName="new_psw_confirm" id="confirm" class="form-control"/><br/>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">{{ user ? 'Actualizar' : 'Añadir' }}</button>
+        </div>
+        @if(submitted && uF.controls['new_psw_confirm'].errors){
+        @if(uF.controls['new_psw_confirm'].errors['matching']){
+            <div class="text-danger">Confirm Password does not match</div>
+        }
+        }
+    </form>
+    }
+</div>

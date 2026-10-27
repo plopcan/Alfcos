@@ -1,0 +1,31 @@
+<div *ngIf="cuenta" class="card mb-3 p-3">
+  <h3 class="card-title text-primary">Cuenta Details</h3>
+  <p class="fs-5">ID: {{ cuenta.id_cuenta }}</p>
+  <p class="fs-5">Description: {{ cuenta.descripcion }}</p>
+  <p class="fs-5">Amount: {{ cuenta.cantidad }}</p>
+  <p class="fs-5">Date: {{ cuenta.fecha }}</p>
+  <p class="fs-5">Type: {{ cuenta.tipo }}</p>
+  <p class="fs-5">Anulada: {{ cuenta.anulada }}</p>
+</div>
+
+<div *ngIf="cuota" class="card mb-3 p-3">
+  <h3 class="card-title text-primary">Cuota Details</h3>
+  <p class="fs-5">ID: {{ cuota.id_cuenta }}</p>
+  <p class="fs-5">Description: {{ cuota.descripcion }}</p>
+  <p class="fs-5">Amount: {{ cuota.cantidad }}</p>
+  <p class="fs-5">Date: {{ cuota.fecha }}</p>
+  <p class="fs-5">Socio ID: {{ cuota.n_socio }}</p>
+  <p class="fs-5">Periodo: {{ cuota.periodo }}</p>
+</div>
+
+<div *ngIf="cuentaEvento" class="card mb-3 p-3">
+  <h3 class="card-title text-primary">Cuenta Evento Details</h3>
+  <p class="fs-5">ID: {{ cuentaEvento.id_cuenta }}</p>
+  <p class="fs-5">Description: {{ cuentaEvento.descripcion }}</p>
+  <p class="fs-5">Amount: {{ cuentaEvento.cantidad }}</p>
+  <p class="fs-5">Date: {{ cuentaEvento.fecha }}</p>
+  <p class="fs-5">Event ID: {{ cuentaEvento.eventoId }}</p>
+  <p class="fs-5">subTipo: {{ cuentaEvento.subtipo }}</p>
+</div>
+
+  <button type="button" (click)="imprimir()" class="btn btn-secondary">Imprimir Ticket</button>
